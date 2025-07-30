@@ -119,7 +119,7 @@ CREATE TABLE emar_detail (
     side                       VARCHAR(50) NULL,
     site                       VARCHAR(50) NULL,
     non_formulary_visual_verification VARCHAR(10) NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 
@@ -175,7 +175,7 @@ CREATE TABLE microbiologyevents (
     ab_name VARCHAR(255),
     dilution_text VARCHAR(50),
     dilution_comparison VARCHAR(10),
-    dilution_value FLOAT,
+    dilution_value VARCHAR(50),
     interpretation VARCHAR(255),
     comments TEXT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -253,28 +253,29 @@ CREATE TABLE poe_detail (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE prescriptions (
-    subject_id INT NOT NULL,
-    hadm_id BIGINT,
-    pharmacy_id BIGINT,
+    row_id     BIGINT AUTO_INCREMENT PRIMARY KEY,  -- 自動流水號
+    subject_id VARCHAR(500),
+    hadm_id VARCHAR(500),
+    pharmacy_id VARCHAR(500),
     poe_id VARCHAR(50),
-    poe_seq INT,
+    poe_seq VARCHAR(500),
     order_provider_id VARCHAR(50),
     starttime DATETIME,
     stoptime DATETIME,
     drug_type VARCHAR(50),
     drug VARCHAR(255),
     formulary_drug_cd VARCHAR(50),
-    gsn VARCHAR(50),
+    gsn VARCHAR(500),
     ndc VARCHAR(50),
     prod_strength VARCHAR(100),
     form_rx VARCHAR(50),
-    dose_val_rx FLOAT,
+    dose_val_rx VARCHAR(500),
     dose_unit_rx VARCHAR(50),
-    form_val_disp FLOAT,
+    form_val_disp VARCHAR(500),
     form_unit_disp VARCHAR(50),
-    doses_per_24_hrs FLOAT,
-    route VARCHAR(50),
-    PRIMARY KEY (subject_id, pharmacy_id)
+    doses_per_24_hrs VARCHAR(500),
+    route VARCHAR(50)
+    
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE procedures_icd (
@@ -292,12 +293,13 @@ CREATE TABLE provider (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE services (
+    row_id     BIGINT AUTO_INCREMENT PRIMARY KEY,  -- 自動流水號
     subject_id      INT NOT NULL,
     hadm_id         INT,
     transfertime    DATETIME,
     prev_service    VARCHAR(10),
-    curr_service    VARCHAR(10),
-    PRIMARY KEY (subject_id, hadm_id, transfertime)
+    curr_service    VARCHAR(10)
+    
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE transfers (
@@ -312,11 +314,12 @@ CREATE TABLE transfers (
     KEY idx_subject_hadm (subject_id, hadm_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE caregivers (
+CREATE TABLE caregiver (
     caregiver_id INT PRIMARY KEY
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE chartevents (
+    row_id     BIGINT AUTO_INCREMENT PRIMARY KEY,  -- 自動流水號
     subject_id      INT NOT NULL,
     hadm_id         INT,
     stay_id         BIGINT,
@@ -329,7 +332,6 @@ CREATE TABLE chartevents (
     valueuom        VARCHAR(32),
     warning         TINYINT,
 
-    PRIMARY KEY (subject_id, stay_id, charttime, itemid),
     INDEX idx_subject_id (subject_id),
     INDEX idx_itemid (itemid),
     INDEX idx_charttime (charttime)
@@ -348,6 +350,7 @@ CREATE TABLE d_items (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE datetimeevents (
+    row_id     BIGINT AUTO_INCREMENT PRIMARY KEY,  -- 自動流水號
     subject_id     INT,
     hadm_id        INT,
     stay_id        INT,
@@ -357,8 +360,8 @@ CREATE TABLE datetimeevents (
     itemid         INT,
     value          DATETIME,
     valueuom       VARCHAR(64),
-    warning        TINYINT,
-    PRIMARY KEY (subject_id, stay_id, charttime, itemid)
+    warning         VARCHAR(255)
+    
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE icustays (
@@ -383,7 +386,7 @@ CREATE TABLE ingredientevents (
     itemid             INT,
     amount             DECIMAL(10,4),
     amountuom          VARCHAR(16),
-    rate               DECIMAL(10,4),
+    rate               VARCHAR(200),
     rateuom            VARCHAR(16),
     orderid            BIGINT,
     linkorderid        BIGINT,
@@ -402,21 +405,21 @@ CREATE TABLE inputevents (
     storetime                     DATETIME,
     itemid                        INT,
     amount                        DECIMAL(10,4),
-    amountuom                     VARCHAR(16),
+    amountuom                     VARCHAR(200),
     rate                          DECIMAL(10,4),
     rateuom                       VARCHAR(16),
     orderid                       BIGINT,
     linkorderid                   BIGINT,
-    ordercategoryname             VARCHAR(64),
-    secondaryordercategoryname    VARCHAR(64),
-    ordercomponenttypedescription VARCHAR(64),
-    ordercategorydescription      VARCHAR(64),
+    ordercategoryname             VARCHAR(200),
+    secondaryordercategoryname    VARCHAR(200),
+    ordercomponenttypedescription VARCHAR(200),
+    ordercategorydescription      VARCHAR(200),
     patientweight                 DECIMAL(5,2),
     totalamount                   DECIMAL(10,4),
-    totalamountuom                VARCHAR(16),
+    totalamountuom                VARCHAR(200),
     isopenbag                     BOOLEAN,
     continueinnextdept            BOOLEAN,
-    statusdescription             VARCHAR(32),
+    statusdescription             VARCHAR(200),
     originalamount                DECIMAL(10,4),
     originalrate                  DECIMAL(10,4)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -458,3 +461,4 @@ CREATE TABLE procedureevents (
     originalamount            DECIMAL(10,4),    -- 原始下單數量
     originalrate              DECIMAL(10,4)     -- 原始速率
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
