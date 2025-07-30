@@ -11,6 +11,7 @@ FILE_PATH="D:\\JONAS\\mimic-iv-3.1\\mimic-iv-3.1\\hosp\\"#檔案路徑
 #批次大小
 chunksize = 100000  # 每批匯入10萬筆，可調整
 
+# table_list:資料表名稱 = CSV 檔案名稱
 table_list=[
         "admissions",
         "d_hcpcs",
@@ -20,7 +21,7 @@ table_list=[
         "diagnoses_icd",
         "drgcodes",
         "emar",#6G
-        "emar_detail",#8D
+        "emar_detail",#8G
         "hcpcsevents",
         "labevents", #17G
         "microbiologyevents",
