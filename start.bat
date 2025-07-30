@@ -1,0 +1,1 @@
+C:\Python\python37_64_20210826\python.exe D:\Project\hisplus_test\manage.py MIMIC_TO_DB.py
