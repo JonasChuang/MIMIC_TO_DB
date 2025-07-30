@@ -24,7 +24,7 @@
 
 
 ##  使用方法
-編輯 MIMIC_TO_DB.py：
+主程式 MIMIC_TO_DB.py：
 
 1.安裝套件 pipenv install
 
