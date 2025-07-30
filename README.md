@@ -34,12 +34,13 @@ engine = create_engine("mysql+pymysql://user:password@host:3306/mimic3_1")
 FILE_PATH="D:\\JONAS\\mimic-iv-3.1\\mimic-iv-3.1\\hosp\\"  
 
 - **`4.執行 python MIMIC_TO_DB.py`**   
-  程式會先執行 CREAT_TBL() → 依 CREAT_TBL.sql 建立所有資料表。
-
-  批次匯入 CSV
+  程式會先執行 CREAT_TBL() → 依 CREAT_TBL.sql 建立所有資料表  
+  若 MySQL 已有資料表，程式會先 DROP TABLE 再重建。
+  
+  批次CSV 轉到 MYSQL  
   執行 CSV_TO_DB()，程式會自動讀取 table_list 裡的表格名稱，依序將 CSV 寫入 MySQL。
 
-  若 MySQL 已有資料表，程式會先 DROP TABLE 再重建。
+  
 
 ---
 
@@ -63,7 +64,7 @@ MIMIC-IV v3.1 全部表格超過 300GB，需預留足夠儲存空間。
 ---
 
 ##  📊 資料表摘要
-已在 CREAT_TBL.sql 定義的主要資料表：
+CREAT_TBL.sql 定義的主要資料表：
 
 住院與病人資訊：admissions, patients, services, transfers
 
