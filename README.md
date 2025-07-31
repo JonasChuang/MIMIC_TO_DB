@@ -8,7 +8,7 @@
 ## 📂 專案檔案
 
 - **`CREAT_TBL.sql`**  
-  定義了所有 MIMIC-IV v3.1 所需的 MySQL 資料表，包含：
+  定義了 MIMIC-IV v3.1 所需的 MySQL 資料表，包含：
   - 使用 `InnoDB` 引擎，支援 UTF8MB4 編碼。
   - 設有 `PRIMARY KEY` 與 `INDEX`，利於查詢效能。
 
