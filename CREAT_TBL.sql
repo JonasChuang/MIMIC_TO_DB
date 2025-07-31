@@ -134,7 +134,8 @@ CREATE TABLE hcpcsevents (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE labevents (
-    labevent_id INT PRIMARY KEY,
+    row_id BIGINT AUTO_INCREMENT PRIMARY KEY,  -- 自動流水號
+    labevent_id INT ,
     subject_id INT NOT NULL,
     hadm_id BIGINT,
     specimen_id BIGINT,
@@ -149,7 +150,14 @@ CREATE TABLE labevents (
     ref_range_upper FLOAT,
     flag VARCHAR(50),
     priority VARCHAR(50),
-    comments TEXT
+    comments TEXT,
+
+    INDEX idx_labevent_id (labevent_id),
+    INDEX idx_subject_id (subject_id),
+    INDEX idx_specimen_id(specimen_id),
+    INDEX idx_itemid (itemid),
+    INDEX idx_row_id(row_id)
+    
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE microbiologyevents (
@@ -257,24 +265,24 @@ CREATE TABLE prescriptions (
     subject_id VARCHAR(500),
     hadm_id VARCHAR(500),
     pharmacy_id VARCHAR(500),
-    poe_id VARCHAR(50),
+    poe_id VARCHAR(500),
     poe_seq VARCHAR(500),
-    order_provider_id VARCHAR(50),
+    order_provider_id VARCHAR(500),
     starttime DATETIME,
     stoptime DATETIME,
-    drug_type VARCHAR(50),
-    drug VARCHAR(255),
-    formulary_drug_cd VARCHAR(50),
+    drug_type VARCHAR(500),
+    drug VARCHAR(500),
+    formulary_drug_cd VARCHAR(500),
     gsn VARCHAR(500),
     ndc VARCHAR(50),
     prod_strength VARCHAR(100),
     form_rx VARCHAR(50),
     dose_val_rx VARCHAR(500),
-    dose_unit_rx VARCHAR(50),
+    dose_unit_rx VARCHAR(500),
     form_val_disp VARCHAR(500),
-    form_unit_disp VARCHAR(50),
+    form_unit_disp VARCHAR(500),
     doses_per_24_hrs VARCHAR(500),
-    route VARCHAR(50)
+    route VARCHAR(500)
     
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -327,7 +335,7 @@ CREATE TABLE chartevents (
     charttime       DATETIME,
     storetime       DATETIME,
     itemid          INT,
-    value           VARCHAR(255),
+    value           VARCHAR(3000),
     valuenum        DECIMAL(10,2),
     valueuom        VARCHAR(32),
     warning         TINYINT,

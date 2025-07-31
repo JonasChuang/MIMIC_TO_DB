@@ -20,17 +20,17 @@ table_list=[
         
         "diagnoses_icd",
         "drgcodes",
-        "emar",#6G
-        "emar_detail",#8G
+        "emar",#6G,3小時
+        "emar_detail",#8G,17小時
         "hcpcsevents",
-        "labevents", #17G
+        "labevents", #17G，15小時
         "microbiologyevents",
         "omr",
         "patients",
         "pharmacy",
         "poe",#4G
         "poe_detail",
-        "prescriptions",
+        "prescriptions",#
         "procedures_icd",
         "provider",
         "services",
@@ -64,7 +64,7 @@ def CSV_TO_DB():#轉檔
             print(table_name+",完成")
         print("轉檔完成")
     except Exception as Error:
-        print("CSV_TO_DB 錯誤!!!!!!! \n"+Error)
+        print("CSV_TO_DB 錯誤!!!!!!! \n"+str(Error))
 
 def CREAT_TBL():#建立資料表
     try:
@@ -97,7 +97,7 @@ def CREAT_TBL():#建立資料表
                         print("Error:", e, "\nStatement:", stmt[:100])
         print("建立資料表完成")
     except Exception as Error:
-        print("建立資料表 錯誤!!!!!!!!!!\n"+Error)
+        print("建立資料表 錯誤!!!!!!!!!!\n"+str(Error))
 
 if __name__ == '__main__':
     CREAT_TBL()#刪除現有資料表，再建立資料表
