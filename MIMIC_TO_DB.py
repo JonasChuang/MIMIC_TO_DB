@@ -28,9 +28,9 @@ table_list=[
         "omr",
         "patients",
         "pharmacy",
-        "poe",#4G
+        "poe",#4G,3小時
         "poe_detail",
-        "prescriptions",#
+        "prescriptions",#2小時
         "procedures_icd",
         "provider",
         "services",

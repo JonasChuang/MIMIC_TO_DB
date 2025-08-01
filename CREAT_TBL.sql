@@ -287,13 +287,14 @@ CREATE TABLE prescriptions (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE procedures_icd (
+    row_id     BIGINT AUTO_INCREMENT PRIMARY KEY,  -- 自動流水號
     subject_id INT NOT NULL,
     hadm_id BIGINT NOT NULL,
     seq_num INT,
     chartdate DATE,
     icd_code VARCHAR(20),
     icd_version TINYINT,
-    PRIMARY KEY (subject_id, hadm_id, seq_num)
+    INDEX idx_icd_code(icd_code)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE provider (
@@ -336,7 +337,7 @@ CREATE TABLE chartevents (
     storetime       DATETIME,
     itemid          INT,
     value           VARCHAR(3000),
-    valuenum        DECIMAL(10,2),
+    valuenum        VARCHAR(100),
     valueuom        VARCHAR(32),
     warning         TINYINT,
 
@@ -392,15 +393,15 @@ CREATE TABLE ingredientevents (
     endtime            DATETIME,
     storetime          DATETIME,
     itemid             INT,
-    amount             DECIMAL(10,4),
+    amount             VARCHAR(100),
     amountuom          VARCHAR(16),
     rate               VARCHAR(200),
     rateuom            VARCHAR(16),
-    orderid            BIGINT,
-    linkorderid        BIGINT,
+    orderid            VARCHAR(100),
+    linkorderid        VARCHAR(100),
     statusdescription  VARCHAR(32),
-    originalamount     DECIMAL(10,4),
-    originalrate       DECIMAL(10,4)
+    originalamount     VARCHAR(100),
+    originalrate       VARCHAR(100)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE inputevents (
@@ -412,9 +413,9 @@ CREATE TABLE inputevents (
     endtime                       DATETIME,
     storetime                     DATETIME,
     itemid                        INT,
-    amount                        DECIMAL(10,4),
+    amount                        VARCHAR(200),
     amountuom                     VARCHAR(200),
-    rate                          DECIMAL(10,4),
+    rate                          VARCHAR(200),
     rateuom                       VARCHAR(16),
     orderid                       BIGINT,
     linkorderid                   BIGINT,
@@ -422,14 +423,14 @@ CREATE TABLE inputevents (
     secondaryordercategoryname    VARCHAR(200),
     ordercomponenttypedescription VARCHAR(200),
     ordercategorydescription      VARCHAR(200),
-    patientweight                 DECIMAL(5,2),
-    totalamount                   DECIMAL(10,4),
+    patientweight                 VARCHAR(200),
+    totalamount                   VARCHAR(200),
     totalamountuom                VARCHAR(200),
-    isopenbag                     BOOLEAN,
-    continueinnextdept            BOOLEAN,
+    isopenbag                     VARCHAR(200),
+    continueinnextdept            VARCHAR(200),
     statusdescription             VARCHAR(200),
-    originalamount                DECIMAL(10,4),
-    originalrate                  DECIMAL(10,4)
+    originalamount                VARCHAR(200),
+    originalrate                  VARCHAR(200)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
@@ -441,7 +442,7 @@ CREATE TABLE outputevents (
     charttime      DATETIME,        -- 紀錄時間
     storetime      DATETIME,        -- 儲存時間
     itemid         INT,             -- 項目 ID（對應 d_items 表）
-    value          DECIMAL(10,4),   -- 數值
+    value          VARCHAR(200),   -- 數值
     valueuom       VARCHAR(16)      -- 單位（如 mL）
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
