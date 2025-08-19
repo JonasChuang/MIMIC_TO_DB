@@ -63,7 +63,7 @@ MIMIC-IV v3.1 全部表格超過 300GB，需預留足夠儲存空間。
 ---
 
 ##  📊 資料表摘要
-定義參考(2017年的) :https://lcp.mit.edu/mimic-schema-spy/index.html
+定義參考(2017年的) :https://lcp.mit.edu/mimic-schema-spy/index.html  
 已在 CREAT_TBL.sql 定義的主要資料表：
 
 住院與病人資訊：admissions, patients, services, transfers
