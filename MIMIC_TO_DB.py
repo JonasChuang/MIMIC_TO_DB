@@ -2,10 +2,12 @@
 import pandas as pd
 from sqlalchemy import create_engine, text,inspect
 from tqdm import tqdm
+import re
+from pathlib import Path
 import pymysql
 pymysql.install_as_MySQLdb()
-engine = create_engine("mysql+pymysql://test:test@10.2.163.201:3306/mimic3_1")# 連接設定
-
+#engine = create_engine("mysql+pymysql://snow:cmu_admin@10.2.130.59:3306/mimic3_1")# 學校
+engine = create_engine("mysql+pymysql://test:test@10.2.163.201:3306/test1")# 連接設定
 FILE_PATH="D:\\JONAS\\mimic-iv-3.1\\mimic-iv-3.1\\hosp\\"#檔案路徑
 
 #批次大小
@@ -99,6 +101,37 @@ def CREAT_TBL():#建立資料表
     except Exception as Error:
         print("建立資料表 錯誤!!!!!!!!!!\n"+str(Error))
 
+def extract_create_table( table_name):
+    try:
+
+        inspector = inspect(engine)
+        with engine.connect() as conn:
+            table_exists = inspector.has_table(table_name)#判斷資料表有沒有存在
+                    
+            try:
+                if table_exists == True:
+                    SQL=f"drop table {table_name};"
+                    conn.execute(text( SQL))#刪除資料表
+            except Exception as ERROR:
+                print("Error:",ERROR)
+                pass
+
+        sql_path = Path("CREAT_TBL.sql")
+        sql_text = sql_path.read_text(encoding="utf-8", errors="ignore")
+        # 正則匹配 CREATE TABLE table_name (...) 結尾到分號
+        pattern = re.compile(
+            rf"CREATE\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?[`\"]?{table_name}[`\"]?\s*\(.*?\);",
+            re.IGNORECASE | re.DOTALL
+        )
+        match = pattern.search(sql_text)
+        if match:
+            return match.group(0)
+        return None
+    
+    except Exception as ERROR:
+        print("Error:",ERROR)
+        pass
+
 if __name__ == '__main__':
-    CREAT_TBL()#刪除現有資料表，再建立資料表
+    #CREAT_TBL()#刪除現有資料表，再建立資料表
     CSV_TO_DB()#轉檔
