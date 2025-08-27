@@ -59,7 +59,19 @@ def CSV_TO_DB():#轉檔
             print("轉檔資料表:"+table_name)
             csv_file=FILE_PATH+table_name+".csv"
           
-            for chunk in tqdm(pd.read_csv(csv_file, chunksize=chunksize,low_memory=True,dtype=str)):
+            reader = pd.read_csv(
+                csv_file,
+                chunksize=chunksize,
+                engine='python',
+                sep=',',
+                quotechar='"',
+                escapechar='\\',
+                dtype=str,
+                low_memory=True,
+                on_bad_lines='warn'  # 或 'skip'
+            )
+            
+            for chunk in tqdm(reader):
                 
                 chunk.to_sql(table_name, con=engine, if_exists='append', index=False, method='multi')
                 
